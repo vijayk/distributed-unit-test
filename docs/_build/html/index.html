@@ -53,20 +53,20 @@
 <div class="section" id="architecture">
 <h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
 <p>Distributed testing infrastructure has two components: the backend and the frontend.</p>
-<ol class="arabic">
-<li><p class="first">Frontend</p>
+<div class="section" id="frontend">
+<h3>Frontend<a class="headerlink" href="#frontend" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>The frontends are language and test framework dependent. &#8220;grind&#8221; is the frontend for Java projects using Surefire and JUnit.</p>
 <p>Frontends are responsible for enumerating the set of tests in the project, determining the test dependencies, and packaging up each test as an independent task.</p>
 </div></blockquote>
-</li>
-<li><p class="first">Backend</p>
+</div>
+<div class="section" id="backend">
+<h3>Backend<a class="headerlink" href="#backend" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>The backend is a shared resource, handles storing test dependencies, running test tasks, monitoring ongoing test runs.</p>
 <p>It reuses some distributed test building blocks developed by Chromium: Swarming and its Go rewrite Luci.</p>
 </div></blockquote>
-</li>
-</ol>
+</div>
 <div class="section" id="backend-components">
 <h3>Backend Components:<a class="headerlink" href="#backend-components" title="Permalink to this headline">¶</a></h3>
 <blockquote>
@@ -86,7 +86,7 @@
 <ol class="arabic">
 <li><p class="first">isolate server</p>
 <blockquote>
-<div><p>We need to build and host <a class="reference external" href="https://github.com/luci/luci-go">https://github.com/luci/luci-go</a> on a Google App Engine and it used google cloud storage.</p>
+<div><p>We need to build and host <a class="reference external" href="https://github.com/luci/luci-go">https://github.com/luci/luci-go</a> on a Google App Engine. App uses google cloud storage for content cache.</p>
 <p>Able to Build the go app but STUCK here in hosting the same to GAE.</p>
 <p>Luci-go server is used as content cache for .isolate file and all the test dependecies which is enumerated by &#8220;grind&#8221;.</p>
 </div></blockquote>
@@ -140,6 +140,8 @@ DB User: disttestuser</div></blockquote>
   <ul>
 <li><a class="reference internal" href="#">Distributed Unit Test</a><ul>
 <li><a class="reference internal" href="#architecture">Architecture</a><ul>
+<li><a class="reference internal" href="#frontend">Frontend</a></li>
+<li><a class="reference internal" href="#backend">Backend</a></li>
 <li><a class="reference internal" href="#backend-components">Backend Components:</a></li>
 </ul>
 </li>

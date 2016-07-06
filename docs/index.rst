@@ -17,13 +17,15 @@ Architecture
 
 Distributed testing infrastructure has two components: the backend and the frontend.
 
-1. Frontend
+Frontend
+^^^^^^^^^^^^
 
     The frontends are language and test framework dependent. "grind" is the frontend for Java projects using Surefire and JUnit.
 
     Frontends are responsible for enumerating the set of tests in the project, determining the test dependencies, and packaging up each test as an independent task.
 
-2. Backend
+Backend
+^^^^^^^^^^
 
     The backend is a shared resource, handles storing test dependencies, running test tasks, monitoring ongoing test runs.
 
@@ -53,7 +55,7 @@ Setup
 --------
 1. isolate server
 
-    We need to build and host https://github.com/luci/luci-go on a Google App Engine and it used google cloud storage.
+    We need to build and host https://github.com/luci/luci-go on a Google App Engine. App uses google cloud storage for content cache.
 
     Able to Build the go app but STUCK here in hosting the same to GAE.
 
