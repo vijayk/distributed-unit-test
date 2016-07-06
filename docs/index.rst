@@ -9,7 +9,7 @@ Distributed Unit Test
 
     It is not a parallel test framework but distributed test mechanism wherein a google project named "swarming" is used to isolate the test run and its required dependencies/environment.
 
-      Currently the framework is onboarded for hadoop, hbase and Apache kudu.
+    Currently the framework is onboarded for hadoop, hbase and Apache kudu.
 
 
 Architecture
