@@ -29,8 +29,9 @@ Distributed testing infrastructure has two components: the backend and the front
 
     It reuses some distributed test building blocks developed by Chromium: Swarming and its Go rewrite Luci.
 
-    Backend Components:
+Backend Components:
 ^^^^^^^^^^^^^^^^^^^
+
   * .isolate file format, which specfies dependencies on a test case and how to run it.
 
 
@@ -56,7 +57,7 @@ Setup
 
     Able to Build the go app but STUCK here in hosting the same to GAE.
 
-    Luci-go server is used a content cache for .isolate file and all the test dependecies which is enumerated by "grind".
+    Luci-go server is used as content cache for .isolate file and all the test dependecies which is enumerated by "grind".
 
 
 2. dist_test server

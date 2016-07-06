@@ -40,61 +40,93 @@
             
   <div class="section" id="distributed-unit-test">
 <h1>Distributed Unit Test<a class="headerlink" href="#distributed-unit-test" title="Permalink to this headline">¶</a></h1>
-<p>Distributed Unit Test
-1. Run tests on a cluster!
-2. Scales horizontally and bounded by longest running test.</p>
-<p>It is not a parallel test framework but distributed test mechanism wherein a google project named &#8220;swarming&#8221; is used to isolate the test run and its required dependencies/environment.
-<a class="reference external" href="https://www.chromium.org/developers/testing/isolated-testing/for-swes">https://www.chromium.org/developers/testing/isolated-testing/for-swes</a></p>
-<p>Currently the framework in on-boarded for hadoop, hbase and apache kudu.</p>
+<p>Distributed Unit Test</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Run tests on a cluster.</li>
+<li>Scales horizontally and bounded by longest running test.</li>
+</ol>
+<p>It is not a parallel test framework but distributed test mechanism wherein a google project named &#8220;swarming&#8221; is used to isolate the test run and its required dependencies/environment.</p>
+<blockquote>
+<div>Currently the framework is onboarded for hadoop, hbase and Apache kudu.</div></blockquote>
+</div></blockquote>
 <div class="section" id="architecture">
 <h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
 <p>Distributed testing infrastructure has two components: the backend and the frontend.</p>
-<p>1. Frontend
-The frontends are language and test framework dependent. &#8220;grind&#8221; is the frontend for Java projects using Surefire and JUnit.
-Frontends are responsible for enumerating the set of tests in the project, determining the test dependencies, and packaging up each test as an independent task.</p>
-<p>2. Backend
-The backend is a shared resource, handles storing test dependencies, running test tasks, monitoring ongoing test runs.
-It reuses some distributed test building blocks developed by Chromium: Swarming and its Go rewrite Luci.</p>
-<p>Chromium: <a class="reference external" href="https://www.chromium.org/developers/testing/isolated-testing/for-swes">https://www.chromium.org/developers/testing/isolated-testing/for-swes</a>
-Luci-go: <a class="reference external" href="https://github.com/luci/luci-go">https://github.com/luci/luci-go</a></p>
-<p>Backend Components:</p>
-<p>&#8211;&gt; .isolate file format, which specfies dependencies on a test case and how to run it.
-&#8211;&gt; isolate server which is a centralized content store for serving dependencies.
-&#8211;&gt; cli utility to interact with isolate server.
-&#8211;&gt; beanstalkd for a work queue manager.
-&#8211;&gt; MySQL to store master node state.
-&#8211;&gt; S3 to store stdout/stderr of failed tests.</p>
+<ol class="arabic">
+<li><p class="first">Frontend</p>
+<blockquote>
+<div><p>The frontends are language and test framework dependent. &#8220;grind&#8221; is the frontend for Java projects using Surefire and JUnit.</p>
+<p>Frontends are responsible for enumerating the set of tests in the project, determining the test dependencies, and packaging up each test as an independent task.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Backend</p>
+<blockquote>
+<div><p>The backend is a shared resource, handles storing test dependencies, running test tasks, monitoring ongoing test runs.</p>
+<p>It reuses some distributed test building blocks developed by Chromium: Swarming and its Go rewrite Luci.</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="backend-components">
+<h3>Backend Components:<a class="headerlink" href="#backend-components" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>.isolate file format, which specfies dependencies on a test case and how to run it.</li>
+<li>isolate server which is a centralized content store for serving dependencies.</li>
+<li>cli utility to interact with isolate server.</li>
+<li>beanstalkd for a work queue manager.</li>
+<li>MySQL to store master node state.</li>
+<li>S3 to store stdout/stderr of failed tests.</li>
+</ul>
+</div></blockquote>
+</div>
 </div>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<p>1. isolate server
-We need to build and host <a class="reference external" href="https://github.com/luci/luci-go">https://github.com/luci/luci-go</a> on a Google App Engine and it used google cloud storage.
-Able to Build the go app but STUCK here in hosting the same to GAE.</p>
-<p>Luci-go server is used a content cache for .isolate file and all the test dependecies which is enumerated by &#8220;grind&#8221;.</p>
-<p>2. dist_test server
-<a class="reference external" href="http://172.22.78.233:8081">http://172.22.78.233:8081</a></p>
-<p>3. slave
-<a class="reference external" href="http://172.22.78.233:8081">http://172.22.78.233:8081</a></p>
-<p>4. beanstalkd
-172.22.78.233</p>
-<p>5. MySQL
-172.22.78.233
+<ol class="arabic">
+<li><p class="first">isolate server</p>
+<blockquote>
+<div><p>We need to build and host <a class="reference external" href="https://github.com/luci/luci-go">https://github.com/luci/luci-go</a> on a Google App Engine and it used google cloud storage.</p>
+<p>Able to Build the go app but STUCK here in hosting the same to GAE.</p>
+<p>Luci-go server is used as content cache for .isolate file and all the test dependecies which is enumerated by &#8220;grind&#8221;.</p>
+</div></blockquote>
+</li>
+<li><p class="first">dist_test server</p>
+<blockquote>
+<div><p><a class="reference external" href="http://172.22.78.233:8081">http://172.22.78.233:8081</a></p>
+</div></blockquote>
+</li>
+<li><p class="first">slave</p>
+<blockquote>
+<div><p><a class="reference external" href="http://172.22.78.233:8081">http://172.22.78.233:8081</a></p>
+</div></blockquote>
+</li>
+<li><p class="first">beanstalkd</p>
+<blockquote>
+<div><p>172.22.78.233</p>
+</div></blockquote>
+</li>
+<li><p class="first">MySQL</p>
+</li>
+</ol>
+<blockquote>
+<div>172.22.78.233
 DB: dist_test
-DB User: disttestuser</p>
+DB User: disttestuser</div></blockquote>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>Blog: <a class="reference external" href="http://blog.cloudera.com/blog/2016/05/quality-assurance-at-cloudera-distributed-unit-testing/">http://blog.cloudera.com/blog/2016/05/quality-assurance-at-cloudera-distributed-unit-testing/</a>
-Presentation: <a class="reference external" href="http://schd.ws/hosted_files/apachebigdata2016/67/distributed_testing_apache_big_data_2016.pptx">http://schd.ws/hosted_files/apachebigdata2016/67/distributed_testing_apache_big_data_2016.pptx</a>
-Isolate testing Framework: <a class="reference external" href="https://www.chromium.org/developers/testing/isolated-testing/infrastructure">https://www.chromium.org/developers/testing/isolated-testing/infrastructure</a>
-Swarming: <a class="reference external" href="https://www.chromium.org/developers/testing/isolated-testing/for-swes">https://www.chromium.org/developers/testing/isolated-testing/for-swes</a>
-Dist Test: <a class="reference external" href="https://github.com/cloudera/dist_test">https://github.com/cloudera/dist_test</a></p>
+<p>Blog:   <a class="reference external" href="http://blog.cloudera.com/blog/2016/05/quality-assurance-at-cloudera-distributed-unit-testing/">http://blog.cloudera.com/blog/2016/05/quality-assurance-at-cloudera-distributed-unit-testing/</a></p>
+<p>Presentation:   <a class="reference external" href="http://schd.ws/hosted_files/apachebigdata2016/67/distributed_testing_apache_big_data_2016.pptx">http://schd.ws/hosted_files/apachebigdata2016/67/distributed_testing_apache_big_data_2016.pptx</a></p>
+<p>Isolate testing Framework:    <a class="reference external" href="https://www.chromium.org/developers/testing/isolated-testing/infrastructure">https://www.chromium.org/developers/testing/isolated-testing/infrastructure</a></p>
+<p>Swarming:   <a class="reference external" href="https://www.chromium.org/developers/testing/isolated-testing/for-swes">https://www.chromium.org/developers/testing/isolated-testing/for-swes</a></p>
+<p>Dist Test:    <a class="reference external" href="https://github.com/cloudera/dist_test">https://github.com/cloudera/dist_test</a></p>
 </div>
 <div class="section" id="live-services">
 <h2>Live Services<a class="headerlink" href="#live-services" title="Permalink to this headline">¶</a></h2>
-<p>Google Isolate Server: <a class="reference external" href="https://isolateserver.appspot.com">https://isolateserver.appspot.com</a>
-Cloudera Test Dashboard: <a class="reference external" href="http://dist-test.cloudera.org">http://dist-test.cloudera.org</a>
-Cloudera Isolate Server: <a class="reference external" href="http://isolate.cloudera.org:4242">http://isolate.cloudera.org:4242</a></p>
+<p>Google Isolate Server:    <a class="reference external" href="https://isolateserver.appspot.com">https://isolateserver.appspot.com</a></p>
+<p>Cloudera Test Dashboard:  <a class="reference external" href="http://dist-test.cloudera.org">http://dist-test.cloudera.org</a></p>
+<p>Cloudera Isolate Server:  <a class="reference external" href="http://isolate.cloudera.org:4242">http://isolate.cloudera.org:4242</a></p>
 </div>
 </div>
 
@@ -107,7 +139,10 @@ Cloudera Isolate Server: <a class="reference external" href="http://isolate.clou
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Distributed Unit Test</a><ul>
-<li><a class="reference internal" href="#architecture">Architecture</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a><ul>
+<li><a class="reference internal" href="#backend-components">Backend Components:</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#setup">Setup</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
 <li><a class="reference internal" href="#live-services">Live Services</a></li>
